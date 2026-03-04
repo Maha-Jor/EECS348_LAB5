@@ -1,10 +1,10 @@
 CC = gcc
 CFLAGS = -Wall -Werror -std=c11
 
-all: Sales_report
+all: Sales_Report
 
-Sales_report: Sales_report.c
-	$(CC) $(CFLAGS) -o Sales_report Sales_report.c
+Sales_report: Sales_Report.c
+	$(CC) $(CFLAGS) -o Sales_Report Sales_Report.c
 
 clean:
-	rm -f Sales_report 
+	rm -f Sales_Report 
