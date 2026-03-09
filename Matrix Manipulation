@@ -1,4 +1,8 @@
 
+#include <stdio.h>
+
+#define SIZE 5
+
 void addMatrices(int m1[SIZE][SIZE], int m2[SIZE][SIZE], int result[SIZE][SIZE]);
 void multiplyMatrices(int m1[SIZE][SIZE], int m2[SIZE][SIZE], int result[SIZE][SIZE]);
 void transposeMatrix(int matrix[SIZE][SIZE], int result[SIZE][SIZE]);
