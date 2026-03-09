@@ -1,1 +1,129 @@
 
+#include <stdio.h>
+
+#define MONTHS 12
+
+void printMonthlyReport(double sales[], char *months[]);
+void printSalesSummary(double sales[], char *months[]);
+void printSixMonth(double sales[], char *months[]);
+void printSalesReport(double sales[], char *months[]);
+
+int main()
+{
+    double sales[MONTHS] = {
+        23458.01, 40112.00, 56011.85, 37820.88,
+        37904.67, 60200.22, 72400.31, 56210.89,
+        67230.84, 68233.12, 80950.34, 95225.22
+    };
+
+    char *months[MONTHS] = {
+        "January", "February", "March", "April",
+        "May", "June", "July", "August",
+        "September", "October", "November", "December"
+    };
+
+    printf("Monthly Sales Report for 2024\n\n");
+
+    printMonthlyReport(sales, months);
+    printSalesSummary(sales, months);
+    printSixMonth(sales, months);
+    printSalesReport(sales, months);
+
+    return 0;
+}
+
+void printMonthlyReport(double sales[], char *months[])
+{
+    printf("Month\t\tSales\n");
+
+    for (int i = 0; i < MONTHS; i++)
+    {
+        printf("%-10s\t$%.2f\n", months[i], sales[i]);
+    }
+}
+
+void printSalesSummary(double sales[], char *months[])
+{
+    double minimum = sales[0];
+    double maximum = sales[0];
+    double sum = 0;
+
+    int minIn = 0;
+    int maxIn = 0;
+
+    for (int i = 0; i < MONTHS; i++)
+    {
+        sum += sales[i];
+
+        if (sales[i] < minimum)
+        {
+            minimum = sales[i];
+            minIn = i;
+        }
+
+        if (sales[i] > maximum)
+        {
+            maximum = sales[i];
+            maxIn = i;
+        }
+    }
+
+    printf("\nSales Summary Report:\n\n");
+    printf("Minimum sales: $%.2f (%s)\n", minimum, months[minIn]);
+    printf("Maximum sales: $%.2f (%s)\n", maximum, months[maxIn]);
+    printf("Average sales: $%.2f\n", sum / MONTHS);
+}
+
+void printSixMonth(double sales[], char *months[])
+{
+    printf("\nSix-Month Moving Average Report:\n\n");
+
+    for (int i = 0; i <= MONTHS - 6; i++)
+    {
+        double sum = 0;
+
+        for (int j = i; j < i + 6; j++)
+        {
+            sum += sales[j];
+        }
+
+        printf("%s-%s\t$%.2f\n", months[i], months[i + 5], sum / 6);
+    }
+}
+
+void printSalesReport(double sales[], char *months[])
+{
+    double varSales[MONTHS];
+    char *varMonths[MONTHS];
+
+    for (int i = 0; i < MONTHS; i++)
+    {
+        varSales[i] = sales[i];
+        varMonths[i] = months[i];
+    }
+
+    for (int i = 0; i < MONTHS - 1; i++)
+    {
+        for (int j = 0; j < MONTHS - i - 1; j++)
+        {
+            if (varSales[j] < varSales[j + 1])
+            {
+                double valSale = varSales[j];
+                varSales[j] = varSales[j + 1];
+                varSales[j + 1] = valSale;
+
+                char *valMonth = varMonths[j];
+                varMonths[j] = varMonths[j + 1];
+                varMonths[j + 1] = valMonth;
+            }
+        }
+    }
+
+    printf("\nSales Report (Highest to Lowest):\n\n");
+    printf("Month\t\tSales\n");
+
+    for (int i = 0; i < MONTHS; i++)
+    {
+        printf("%-10s\t$%.2f\n", varMonths[i], varSales[i]);
+    }
+}
